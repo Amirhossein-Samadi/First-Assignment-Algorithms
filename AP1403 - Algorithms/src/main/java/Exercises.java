@@ -10,6 +10,18 @@ public class Exercises {
     */
     public int[] productIndices(int[] values, int target) {
         // todo
+
+        for (int i = 0; i < values.length; i++)
+        {
+            for (int j = 1; j < values.length; j++)
+            {
+                if (values[i] * values[j] == target)
+                {
+                    return new int[]{i, j};
+                }
+            }
+        }
+
         return null;
     }
 
