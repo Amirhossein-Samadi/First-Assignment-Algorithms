@@ -11,6 +11,10 @@ public class Exercises {
     public int[] productIndices(int[] values, int target) {
         // todo
 
+        /*
+        The code is written on the basis that it checks all possible products until we reach the answer.
+        */
+
         for (int i = 0; i < values.length; i++)
         {
             for (int j = 1; j < values.length; j++)
