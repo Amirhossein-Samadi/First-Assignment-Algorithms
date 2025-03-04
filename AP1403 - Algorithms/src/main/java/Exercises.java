@@ -42,7 +42,58 @@ public class Exercises {
     */
     public int[] spiralTraversal(int[][] values, int rows, int cols) {
         // todo
-        return null;
+
+        int [] onedimensional = new int[rows*cols];
+
+        int index = 0;
+
+        int up = 0;
+        int down = rows - 1;
+
+        int left = 0;
+        int right = cols - 1;
+
+        while (up <= down && left <= right)
+        {
+            for (int i = left; i <= right; i++)
+            {
+                onedimensional[index] = values[up][i];
+                index++;
+            }
+            up++;
+
+
+            for (int i = up; i <= down; i++)
+            {
+                onedimensional[index] = values[i][right];
+                index++;
+            }
+            right--;
+
+
+            if (top <= down)
+            {
+                for (int i = right; i >= left; i--)
+                {
+                    onedimensional[index] = values[down][i];
+                    index++;
+                }
+                down--;
+            }
+
+
+            if (left <= right)
+            {
+                for (int i = down; i >= top; i--)
+                {
+                   onedimensional[index] = values[i][left];
+                   index++;
+                }
+                left++;
+            }
+        }
+
+        return onedimensional;
     }
 
     /*
