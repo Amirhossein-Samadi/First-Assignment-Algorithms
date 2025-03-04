@@ -43,53 +43,63 @@ public class Exercises {
     public int[] spiralTraversal(int[][] values, int rows, int cols) {
         // todo
 
+        /*
+        In this code, we divided the movements into four categories:
+        left to right,
+        top to bottom,
+        right to left, and
+        bottom to top.
+        */
+
         int [] onedimensional = new int[rows*cols];
 
-        int index = 0;
+        int index = 0;              // Specifies which cell of a one-dimensional matrix should be filled.
 
-        int up = 0;
-        int down = rows - 1;
+        int up = 0;                 // Shows which row we are in when moving from left to right.
+        int down = rows - 1;        // Shows which row we are in when moving from right to left.
 
-        int left = 0;
-        int right = cols - 1;
+        int left = 0;               // Shows which column we are in when moving from down to up.
+        int right = cols - 1;       // Shows which column we are in when moving from up  to down.
 
         while (up <= down && left <= right)
         {
+            // Scroll from left to right on a given line.
             for (int i = left; i <= right; i++)
             {
                 onedimensional[index] = values[up][i];
                 index++;
             }
-            up++;
+            up++;                   // We move to the next line because the navigation is complete on this line.
 
 
+            // Scroll from up to down on a given column.
             for (int i = up; i <= down; i++)
             {
                 onedimensional[index] = values[i][right];
                 index++;
             }
-            right--;
+            right--;               // We move to the next column because the navigation is complete on this column.
 
 
-            if (top <= down)
-            {
+            if (top <= down)       // When scrolling from right to left, we may have reached the last cell,
+            {                      // where we need to check whether the rows have reached each other.
                 for (int i = right; i >= left; i--)
                 {
                     onedimensional[index] = values[down][i];
                     index++;
                 }
-                down--;
+                down--;             // We move to the next line because the navigation is complete on this line.
             }
 
 
-            if (left <= right)
-            {
+            if (left <= right)      // When scrolling from down to up, we may have reached the last cell,
+            {                       // where we need to check whether the columns have reached each other.
                 for (int i = down; i >= top; i--)
                 {
                    onedimensional[index] = values[i][left];
                    index++;
                 }
-                left++;
+                left++;             // We move to the next column because the navigation is complete on this column.
             }
         }
 
