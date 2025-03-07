@@ -134,9 +134,9 @@ public class Exercises {
         // todo
         public int[][] intPartitions(int n) {
             List<List<Integer>> result = new ArrayList<>();
-            partitionHelper(n, new ArrayList<>(), result, n);  
+            partitionHelper(n, new ArrayList<>(), result, n);  // recursive func
 
-            int[][] partitions = new int[result.size()][];
+            int[][] partitions = new int[result.size()][];  // convert
             for (int i = 0; i < result.size(); i++) {
                 partitions[i] =new int[result.get(i).size()];
                 for (int j = 0; j < result.get(i).size(); j++) {
@@ -147,7 +147,7 @@ public class Exercises {
             return partitions;
         }
 
-
+        // static cause no need to make an object of the class
         private static void partitionHelper(int rightNumber, List<Integer> current, List<List<Integer>> result, int leftNumber) {
             if (rightNumber == 0 ) {
                 result.add(new ArrayList<>(current));
@@ -155,9 +155,9 @@ public class Exercises {
             }
 
             for (int i = Math.min(leftNumber, rightNumber); i > 0; i--) {
-                current.add(i);
+                current.add(i); // Add the number to the current partition
                 partitionHelper(rightNumber - i, current, result, i);
-                current.removeLast();
+                current.removeLast(); // clears the list
             }
         }
     }
