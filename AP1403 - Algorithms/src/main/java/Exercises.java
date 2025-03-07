@@ -81,7 +81,7 @@ public class Exercises {
             right--;               // We move to the next column because the navigation is complete on this column.
 
 
-            if (top <= down)       // When scrolling from right to left, we may have reached the last cell,
+            if (up <= down)       // When scrolling from right to left, we may have reached the last cell,
             {                      // where we need to check whether the rows have reached each other.
                 for (int i = right; i >= left; i--)
                 {
@@ -94,7 +94,7 @@ public class Exercises {
 
             if (left <= right)      // When scrolling from down to up, we may have reached the last cell,
             {                       // where we need to check whether the columns have reached each other.
-                for (int i = down; i >= top; i--)
+                for (int i = down; i >= up; i--)
                 {
                    onedimensional[index] = values[i][left];
                    index++;
@@ -132,7 +132,34 @@ public class Exercises {
     */
     public int[][] intPartitions(int n) {
         // todo
-        return null;
+        public int[][] intPartitions(int n) {
+            List<List<Integer>> result = new ArrayList<>();
+            partitionHelper(n, new ArrayList<>(), result, n);  
+
+            int[][] partitions = new int[result.size()][];
+            for (int i = 0; i < result.size(); i++) {
+                partitions[i] =new int[result.get(i).size()];
+                for (int j = 0; j < result.get(i).size(); j++) {
+                    partitions[i][j] = result.get(i).get(j);
+                }
+            }
+
+            return partitions;
+        }
+
+
+        private static void partitionHelper(int rightNumber, List<Integer> current, List<List<Integer>> result, int leftNumber) {
+            if (rightNumber == 0 ) {
+                result.add(new ArrayList<>(current));
+                return;
+            }
+
+            for (int i = Math.min(leftNumber, rightNumber); i > 0; i--) {
+                current.add(i);
+                partitionHelper(rightNumber - i, current, result, i);
+                current.removeLast();
+            }
+        }
     }
 
     public static void main(String[] args) {
