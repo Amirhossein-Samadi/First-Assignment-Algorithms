@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Exercises {
 
     /*
@@ -10,6 +13,22 @@ public class Exercises {
     */
     public int[] productIndices(int[] values, int target) {
         // todo
+
+        /*
+        The code is written on the basis that it checks all possible products until we reach the answer.
+        */
+
+        for (int i = 0; i < values.length; i++)
+        {
+            for (int j = 1; j < values.length; j++)
+            {
+                if (values[i] * values[j] == target)
+                {
+                    return new int[]{i, j};
+                }
+            }
+        }
+
         return null;
     }
 
@@ -26,7 +45,68 @@ public class Exercises {
     */
     public int[] spiralTraversal(int[][] values, int rows, int cols) {
         // todo
-        return null;
+
+        /*
+        In this code, we divided the movements into four categories:
+        left to right,
+        top to bottom,
+        right to left, and
+        bottom to top.
+        */
+
+        int [] onedimensional = new int[rows*cols];
+
+        int index = 0;              // Specifies which cell of a one-dimensional matrix should be filled.
+
+        int up = 0;                 // Shows which row we are in when moving from left to right.
+        int down = rows - 1;        // Shows which row we are in when moving from right to left.
+
+        int left = 0;               // Shows which column we are in when moving from down to up.
+        int right = cols - 1;       // Shows which column we are in when moving from up  to down.
+
+        while (up <= down && left <= right)
+        {
+            // Scroll from left to right on a given line.
+            for (int i = left; i <= right; i++)
+            {
+                onedimensional[index] = values[up][i];
+                index++;
+            }
+            up++;                   // We move to the next line because the navigation is complete on this line.
+
+
+            // Scroll from up to down on a given column.
+            for (int i = up; i <= down; i++)
+            {
+                onedimensional[index] = values[i][right];
+                index++;
+            }
+            right--;               // We move to the next column because the navigation is complete on this column.
+
+
+            if (up <= down)       // When scrolling from right to left, we may have reached the last cell,
+            {                      // where we need to check whether the rows have reached each other.
+                for (int i = right; i >= left; i--)
+                {
+                    onedimensional[index] = values[down][i];
+                    index++;
+                }
+                down--;             // We move to the next line because the navigation is complete on this line.
+            }
+
+
+            if (left <= right)      // When scrolling from down to up, we may have reached the last cell,
+            {                       // where we need to check whether the columns have reached each other.
+                for (int i = down; i >= up; i--)
+                {
+                   onedimensional[index] = values[i][left];
+                   index++;
+                }
+                left++;             // We move to the next column because the navigation is complete on this column.
+            }
+        }
+
+        return onedimensional;
     }
 
     /*
@@ -55,7 +135,34 @@ public class Exercises {
     */
     public int[][] intPartitions(int n) {
         // todo
-        return null;
+        public int[][] intPartitions(int n) {
+            List<List<Integer>> result = new ArrayList<>();
+            partitionHelper(n, new ArrayList<>(), result, n);  // recursive func
+
+            int[][] partitions = new int[result.size()][];  // convert
+            for (int i = 0; i < result.size(); i++) {
+                partitions[i] =new int[result.get(i).size()];
+                for (int j = 0; j < result.get(i).size(); j++) {
+                    partitions[i][j] = result.get(i).get(j);
+                }
+            }
+
+            return partitions;
+        }
+
+        // static cause no need to make an object of the class
+        private static void partitionHelper(int rightNumber, List<Integer> current, List<List<Integer>> result, int leftNumber) {
+            if (rightNumber == 0 ) {
+                result.add(new ArrayList<>(current));
+                return;
+            }
+
+            for (int i = Math.min(leftNumber, rightNumber); i > 0; i--) {
+                current.add(i); // Add the number to the current partition
+                partitionHelper(rightNumber - i, current, result, i);
+                current.removeLast(); // clears the list
+            }
+        }
     }
 
     public static void main(String[] args) {
